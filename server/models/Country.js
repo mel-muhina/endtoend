@@ -42,6 +42,12 @@ class Country {
             throw new Error("A country with this name already exists")
         }
     }
+
+    async destroy(data) {
+        const response = await db.query("DELETE FROM country WHERE name = $1 RETURNING *;", [this.name])
+        return new Country(response.rows[0])
+     
+    }
     
 }
 

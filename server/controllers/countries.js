@@ -30,8 +30,22 @@ async function create(req, res) {
     }
 }
 
+async function destroy(req, res) {
+    try {
+       const name = req.params.name
+       const country = await Country.getOneByCountryName(name)
+       const result = await country.destroy()
+       res.sendStatus(204)
+
+    } catch(err) {
+        res.status(404).json({ error: err.message })
+    }
+}
+
+
 module.exports = {
     index,
     show,
-    create
+    create,
+    destroy
 }
