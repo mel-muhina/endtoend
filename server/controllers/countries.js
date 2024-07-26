@@ -51,9 +51,10 @@ async function update(req, res) {
        const findCountry = await Country.getOneByCountryName(name)
      
        if(findCountry) {
-        
-        const result = await findCountry.update(name, newCountry)
-        // console.log(result);
+        const result = await findCountry.update(newCountry)
+        console.log("controller update function 6", res.status )
+
+        // console.log(""result);
         res.status(200).json(result)
        }
        

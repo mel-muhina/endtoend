@@ -2,12 +2,12 @@ const db = require("../db/connect")
 
 class Country {
     constructor({country_id, name, capital, population, languages, fun_fact, map_image_url}) {
-        this.country_id = country_id
-        this.name = name
-        this.capital = capital
-        this.population = population
-        this.languages = languages
-        this.fun_fact = fun_fact
+        this.country_id = country_id,
+        this.name = name,
+        this.capital = capital,
+        this.population = population,
+        this.languages = languages,
+        this.fun_fact = fun_fact,
         this.map_image_url = map_image_url
     }
 
@@ -50,13 +50,14 @@ class Country {
     }
 
     async update(newCountry) {
+        const oldName = this.name
         const { name, capital, population, languages } = newCountry;
-        console.log("trying this new country",this.name);
-        console.log(newCountry);
-        // const updatedCountry = await db.query("SELECT name FROM country WHERE LOWER(name) = LOWER($1);", [oldCountry])
-
-        if(this.name) {
-            let response = await db.query("UPDATE country SET name = $1, capital = $2, population = $3, languages = $4 WHERE(name) = $5 RETURNING *;", [name, capital, population, languages, this.country])
+        const result = await db.query("SELECT name FROM country WHERE LOWER(name) = LOWER($1);", [oldName])
+      
+        if(result.rows.length > 0) {
+            const updatedCountry = result.rows[0].name;
+       
+            let response = await db.query("UPDATE country SET name=($1), capital=($2), population=($3), languages=($4) WHERE LOWER(name) = LOWER($5) RETURNING *;", [name, capital, population, languages, updatedCountry])
             return new Country(response.rows[0])
         } else {
             throw new Error("Country not found")
