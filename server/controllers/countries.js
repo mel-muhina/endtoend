@@ -22,6 +22,7 @@ async function show(req, res) {
 async function create(req, res) {
     try {
         const data = req.body
+        console.log(req);
         const newCountry = await Country.create(data)
         res.status(201).json(newCountry)
 
@@ -42,10 +43,31 @@ async function destroy(req, res) {
     }
 }
 
+async function update(req, res) {
+      try {
+       const name = req.params.name;
+       const newCountry = req.body;
+
+       const findCountry = await Country.getOneByCountryName(name)
+     
+       if(findCountry) {
+        
+        const result = await findCountry.update(name, newCountry)
+        // console.log(result);
+        res.status(200).json(result)
+       }
+       
+
+    } catch(err) {
+        res.status(500).json({ error: err.message })
+    }
+}
 
 module.exports = {
     index,
     show,
     create,
-    destroy
+    destroy,
+    update
+
 }

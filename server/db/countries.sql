@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS country;
 -- creating table with the name
 CREATE TABLE country (
     country_id INT GENERATED ALWAYS AS IDENTITY,
-    name VARCHAR(100) NOT NULL, --max country name of 100 countries
+    name VARCHAR(100) NOT NULL, --max country name of 100 characters
     capital VARCHAR(100) NOT NULL,
     population INT NOT NULL,
     languages VARCHAR(100) NOT NULL,
