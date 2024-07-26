@@ -14,12 +14,20 @@ class Country {
     //static because we're calling on class itself and don't need any particular data like this.country that instance would need
     static async getAll() {
         //retrieve all names from country but if the length is 0 then will throw an error
-        const response = await db-query("SELECT name FROM country;")
+        const response = await db.query("SELECT name FROM country;")
         if(response.rows.length === 0) {
             throw new Error("No countries avaliable.")
         }
         // map through the rows we found, pass the data to return the data to user
         return response.rows.map(c => new Country(c))
+    }
+
+    static async getOneByCountryName(countryName) {
+        const response = await db.query("SELECT * FROM country WHERE LOWER(name) = LOWER($1);", [countryName])
+        if(response.rows.length != 1) {
+            throw new Error("Unable to locate country")
+        }
+        return new Country(response.rows[0])
     }
 }
 

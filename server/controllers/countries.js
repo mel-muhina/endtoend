@@ -9,6 +9,17 @@ async function index(req, res) {
     }
 }
 
+async function show(req, res) {
+    try {
+        const name = req.params.name
+        const country = await Country.getOneByCountryName(name)
+        res.status(200).json(country)
+    }catch(err){
+        res.status(404).json({ error: err.message })
+    }
+}
+
 module.exports = {
-    index
+    index,
+    show
 }
