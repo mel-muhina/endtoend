@@ -1,17 +1,31 @@
 -- Dont want duplicate tables so use this to prevent dups
+DROP TABLE IF EXISTS people; 
 DROP TABLE IF EXISTS country; 
+
 
 -- creating table with the name
 CREATE TABLE country (
-    country_id INT GENERATED ALWAYS AS IDENTITY,
+    country_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name VARCHAR(100) NOT NULL, --max country name of 100 characters
     capital VARCHAR(100) NOT NULL,
     population INT NOT NULL,
     languages VARCHAR(100) NOT NULL,
     fun_fact VARCHAR(255),
-    map_image_url VARCHAR(255),
-    PRIMARY KEY(country_id)
+    map_image_url VARCHAR(255)
+
 );
+
+-- creating a second table with the people from the countries above
+CREATE TABLE people (
+    people_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(30) NOT NULL, --max person name of 30 characters
+    languages VARCHAR(100) NOT NULL,
+    country_origin_name VARCHAR(100) NOT NULL,
+    country_id INT,
+    FOREIGN KEY(country_id) REFERENCES country(country_id)
+);
+
+
 
 -- seeding / populating the table created above
 INSERT INTO country (name, capital, population, languages, fun_fact, map_image_url) 
@@ -24,5 +38,24 @@ VALUES ('Brazil', 'Brasília', 212559417, 'Portuguese', 'Brazil is the fifth lar
   ('Japan', 'Tokyo', 126860301, 'Japanese', 'Japan is home to the world''s largest fish market, Tsukiji Market.', 'https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/Flag_of_Japan.svg/1200px-Flag_of_Japan.svg.png'),
   ('South Africa', 'Pretoria', 57779622, 'Afrikaans, English, Zulu, Xhosa, and others', 'South Africa has 11 official languages.', 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/1200px-Flag_of_South_Africa.svg.png'),
   ('Australia', 'Canberra', 24982688, 'English', 'Australia is home to the kangeroo.', 'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png');
- 
 
+-- seeding the people table
+  INSERT INTO people (name, languages, country_origin_name, country_id)
+  VALUES ('João Silva', 'Portuguese', 'Brazil', 1),
+('Maria Santos', 'Portuguese', 'Brazil', 1),
+('Juan Pérez', 'Spanish', 'Mexico', 2),
+('Ana García', 'Spanish', 'Mexico', 2),
+('John Doe', 'English', 'United States', 3),
+('Jane Smith', 'English', 'United States', 3),
+('Aarav Patel', 'Hindi, English', 'India', 4),
+('Priya Sharma', 'Hindi, English', 'India', 4),
+('Wei Zhang', 'Mandarin', 'China', 5),
+('Li Wei', 'Mandarin', 'China', 5),
+('Ivan Petrov', 'Russian', 'Russia', 6),
+('Olga Ivanova', 'Russian', 'Russia', 6),
+('Hiroshi Tanaka', 'Japanese', 'Japan', 7),
+('Yuki Nakamura', 'Japanese', 'Japan', 7),
+('Thabo Mokoena', 'Afrikaans, English, Zulu, Xhosa, and others', 'South Africa', 8),
+('Nandi Nkosi', 'Afrikaans, English, Zulu, Xhosa, and others', 'South Africa', 8),
+('Liam OConnor', 'English', 'Australia', 9),
+('Olivia Brown', 'English', 'Australia', 9);
