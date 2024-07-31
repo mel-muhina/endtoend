@@ -22,7 +22,6 @@ async function show(req, res) {
 async function create(req, res) {
     try {
         const data = req.body
-        console.log(req);
         const newCountry = await Country.create(data)
         res.status(201).json(newCountry)
 
@@ -52,9 +51,7 @@ async function update(req, res) {
      
        if(findCountry) {
         const result = await findCountry.update(newCountry)
-        console.log("controller update function 6", res.status )
 
-        // console.log(""result);
         res.status(200).json(result)
        }
        

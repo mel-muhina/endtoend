@@ -26,18 +26,25 @@ class People {
         return new People(response.rows[0])
     }
 
-    // static async create(data) {
-    //     //even if we dont have all the values added here, they can still be added in patch
-    //     // object destructuring, in the oject.data this is what it has
-    //     const { name, capital, population, languages } = data
-    //     const existingCountry = await db.query("SELECT name FROM country WHERE LOWER(name) = LOWER($1);", [name])
-    //     if(existingCountry.rows.length === 0) {
-    //         let response = await db.query("INSERT INTO country (name, capital, population, languages) VALUES ($1, $2, $3, $4) RETURNING *;", [name, capital, population, languages])
-    //         return new Country(response.rows[0])
-    //     } else {
-    //         throw new Error("A country with this name already exists")
-    //     }
-    // }
+    static async create(data) {
+        const { name, languages, country_origin_name} = data
+
+        const existingPerson = await db.query("SELECT name FROM people WHERE LOWER(name) = LOWER($1);", [name])
+
+        let countryResult = await db.query("SELECT country_id FROM country WHERE LOWER(name) LIKE LOWER($1);", [`%${country_origin_name}%`])
+        if (countryResult.rows.length === 0) {
+            throw new Error(`Country with name ${country_origin_name} does not exist.`)
+        }
+
+       let country_id = countryResult.rows[0].country_id;
+
+        if(existingPerson.rows.length === 0) {
+            let response = await db.query("INSERT INTO people (name, languages, country_origin_name, country_id) VALUES ($1, $2, $3, $4) RETURNING *;", [name, languages, country_origin_name, country_id])
+            return new People(response.rows[0])
+        } else {
+            throw new Error("A person with this name already exists")
+        }
+    }
 
     // async destroy(data) {
     //     const response = await db.query("DELETE FROM country WHERE name = $1 RETURNING *;", [this.name])

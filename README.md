@@ -14,10 +14,17 @@ PORT=3000
 And my local server will be:
 http://localhost:3000
 
-## Installing the Database
+## How to Setup and Run the Database
 
 You will also need to create your own SQL database (I recommend Supabase.com) and connect the URL given to the project in your .env file, after setting the port above.
 "DB_URL=(Add your URL here)"
+
+Once you have completed your installation and added your URL to your .env file you need to run 'npm run setup-db' in your teminal(i.e. Gitbash, Powershell etc.) to seed the data into your new SQL database.
+
+## How to Run the Server
+
+If everything has been set up you can run the server to access the database information and use the API successfully. You need to run 'npm run dev' in your teminal(i.e. Gitbash, Powershell etc.) so that your server can start running in the background. The server will continously run until stopped, so if you need to access the terminal again after running the server, you can stop running the server using CTRL + C. Please remember to restart the server whenever you need it back up.
+
 
 ## Avaliable Options
 

@@ -19,17 +19,16 @@ async function show(req, res) {
     }
 }
 
-// async function create(req, res) {
-//     try {
-//         const data = req.body
-//         console.log(req);
-//         const newCountry = await Country.create(data)
-//         res.status(201).json(newCountry)
+async function create(req, res) {
+    try {
+        const data = req.body
+        const newPerson = await People.create(data)
+        res.status(201).json(newPerson)
 
-//     } catch(err) {
-//         res.status(400).json({ error: err.message })
-//     }
-// }
+    } catch(err) {
+        res.status(400).json({ error: err.message })
+    }
+}
 
 // async function destroy(req, res) {
 //     try {
@@ -66,7 +65,8 @@ async function show(req, res) {
 
 module.exports = {
     index,
-    show
+    show,
+    create
     
 
 }

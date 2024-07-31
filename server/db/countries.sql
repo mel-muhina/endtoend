@@ -40,7 +40,7 @@ VALUES ('Brazil', 'Brasília', 212559417, 'Portuguese', 'Brazil is the fifth lar
   ('Australia', 'Canberra', 24982688, 'English', 'Australia is home to the kangeroo.', 'https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Flag_of_Australia.svg/1200px-Flag_of_Australia.svg.png');
 
 -- seeding the people table
-  INSERT INTO people (name, languages, country_origin_name, country_id)
+  INSERT INTO people (name, languages, country_origin_name)
   VALUES ('João Silva', 'Portuguese', 'Brazil', 1),
 ('Maria Santos', 'Portuguese', 'Brazil', 1),
 ('Juan Pérez', 'Spanish', 'Mexico', 2),
@@ -59,3 +59,6 @@ VALUES ('Brazil', 'Brasília', 212559417, 'Portuguese', 'Brazil is the fifth lar
 ('Nandi Nkosi', 'Afrikaans, English, Zulu, Xhosa, and others', 'South Africa', 8),
 ('Liam OConnor', 'English', 'Australia', 9),
 ('Olivia Brown', 'English', 'Australia', 9);
+  INSERT INTO people (country_id)
+  VALUES (1);
+
