@@ -19,6 +19,16 @@ async function show(req, res) {
     }
 }
 
+async function showById(req, res) {
+    try {
+        const id = req.params.id
+        const people = await People.getOneById(id)
+        res.status(200).json(people)
+    }catch(err){
+        res.status(404).json({ error: err.message })
+    }
+}
+
 async function create(req, res) {
     try {
         const data = req.body
@@ -30,17 +40,18 @@ async function create(req, res) {
     }
 }
 
-// async function destroy(req, res) {
-//     try {
-//        const name = req.params.name
-//        const country = await Country.getOneByCountryName(name)
-//        const result = await country.destroy()
-//        res.sendStatus(204)
+async function destroy(req, res) {
+    try {
+       const id = req.params.id
+       const people = await People.getOneById(id)
+       console.log("controller destroy", people)
+       const result = await people.destroy()
+       res.sendStatus(204)
 
-//     } catch(err) {
-//         res.status(404).json({ error: err.message })
-//     }
-// }
+    } catch(err) {
+        res.status(404).json({ error: err.message })
+    }
+}
 
 // async function update(req, res) {
 //       try {
@@ -66,7 +77,9 @@ async function create(req, res) {
 module.exports = {
     index,
     show,
-    create
+    showById,
+    create,
+    destroy
     
 
 }

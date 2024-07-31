@@ -26,6 +26,15 @@ class People {
         return new People(response.rows[0])
     }
 
+    static async getOneById(id) {
+        const response = await db.query("SELECT * FROM people WHERE people_id = ($1);", [id])
+        let foundId = response.rows[0].people_id
+        if(response.rows.length != 1) {
+            throw new Error("Unable to locate this person. Please enter a correct ID.")
+        }
+        return new People(response.rows[0])
+    }
+
     static async create(data) {
         const { name, languages, country_origin_name} = data
 
@@ -46,11 +55,11 @@ class People {
         }
     }
 
-    // async destroy(data) {
-    //     const response = await db.query("DELETE FROM country WHERE name = $1 RETURNING *;", [this.name])
-    //     return new Country(response.rows[0])
+    async destroy(data) {
+        const response = await db.query("DELETE FROM people WHERE people_id = $1 RETURNING *;", [this.people_id])
+        return new People(response.rows[0])
      
-    // }
+    }
 
     // async update(newCountry) {
     //     const oldName = this.name
